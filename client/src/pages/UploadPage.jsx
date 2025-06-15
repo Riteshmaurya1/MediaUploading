@@ -6,6 +6,7 @@ const UploadPage = () => {
     const [mediaURL, setMediaURL] = useState("");
 
     const handleUpload = async () => {
+        if (!file) return;
         const formData = new FormData();
         formData.append("file", file);
 
@@ -14,20 +15,48 @@ const UploadPage = () => {
     };
 
     return (
-        <div>
-            <h2>Upload Your Photo or Video</h2>
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-            <button onClick={handleUpload}>Upload</button>
-            {mediaURL && (
-                <>
-                    <h4>Uploaded:</h4>
-                    {mediaURL.includes("video") ? (
-                        <video src={mediaURL} controls width="400" />
-                    ) : (
-                        <img src={mediaURL} alt="Uploaded" width="400" />
-                    )}
-                </>
-            )}
+        <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-16">
+            <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-2xl p-8 shadow-2xl backdrop-blur-md">
+                <h2 className="text-2xl font-semibold text-center mb-6 text-white">
+                    🚀 Upload Photo or Video
+                </h2>
+
+                <div className="mb-4">
+                    <input
+                        type="file"
+                        className="block w-full text-sm text-zinc-300 bg-zinc-800 rounded-lg border border-zinc-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 transition"
+                        onChange={(e) => setFile(e.target.files[0])}
+                    />
+                </div>
+
+                <button
+                    onClick={handleUpload}
+                    className="w-full bg-indigo-600 hover:bg-indigo-500 transition text-white py-2 rounded-lg font-medium"
+                >
+                    Upload
+                </button>
+
+                {mediaURL && (
+                    <div className="mt-6">
+                        <h4 className="text-lg font-medium text-zinc-300 mb-2">Uploaded:</h4>
+                        <div className="rounded-lg overflow-hidden shadow-md">
+                            {mediaURL.includes("video") ? (
+                                <video
+                                    src={mediaURL}
+                                    controls
+                                    className="w-full rounded-lg"
+                                />
+                            ) : (
+                                <img
+                                    src={mediaURL}
+                                    alt="Uploaded media"
+                                    className="w-full rounded-lg"
+                                />
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
